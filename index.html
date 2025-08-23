@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أبو حذيفة للصرافة والتحويلات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(17, 55, 102, 0.85), rgba(0, 128, 158, 0.85));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+        
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7);
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .currency-card {
+            background: linear-gradient(135deg, #113766 0%, #1e4a72 50%, #00809e 100%);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(17, 55, 102, 0.3), 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .currency-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .currency-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(17, 55, 102, 0.4), 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .currency-card:hover::before {
+            left: 100%;
+        }
+        
+        .iphone-mockup {
+            position: relative;
+            width: 240px;
+            height: 490px;
+            background: linear-gradient(145deg, #1c1c1e, #2c2c2e);
+            border-radius: 45px;
+            padding: 6px;
+            box-shadow: 
+                0 0 0 2px #3a3a3c,
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 40px 80px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 640px) {
+            .iphone-mockup {
+                width: 280px;
+                height: 570px;
+                border-radius: 55px;
+                padding: 8px;
+            }
+        }
+        
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 106px;
+            height: 32px;
+            background: #000;
+            border-radius: 16px;
+            z-index: 10;
+        }
+        
+        @media (min-width: 640px) {
+            .dynamic-island {
+                top: 12px;
+                width: 126px;
+                height: 37px;
+                border-radius: 19px;
+            }
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, #113766, #00809e);
+            border-radius: 18px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 25px rgba(17, 55, 102, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(17, 55, 102, 0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #113766, #00809e);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(17, 55, 102, 0.4);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .navbar {
+            background: rgba(17, 55, 102, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #113766, #00809e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .contact-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="navbar fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <img src="https://i.imgur.com/huAAjij.png" alt="أبو حذيفة للصرافة" class="h-12 w-auto rounded-xl shadow-lg" onerror="this.src=''; this.alt='شعار أبو حذيفة للصرافة'; this.style.display='none';">
+                    <h1 class="text-white text-xl font-bold">أبو حذيفة للصرافة والتحويلات</h1>
+                </div>
+                <div class="hidden sm:flex items-center space-x-4 lg:space-x-6 space-x-reverse">
+                    <a href="#home" class="text-white hover:text-blue-200 transition-colors text-sm lg:text-base">الرئيسية</a>
+                    <a href="#rates" class="text-white hover:text-blue-200 transition-colors text-sm lg:text-base">أسعار الصرف</a>
+                    <a href="#app" class="text-white hover:text-blue-200 transition-colors text-sm lg:text-base">تطبيق واصل كاش</a>
+                    <a href="#contact" class="text-white hover:text-blue-200 transition-colors text-sm lg:text-base">تواصل معنا</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center">
+        <div class="slideshow-container">
+            <div class="slide active" style="background-image: url('https://i.imgur.com/tZhzGCN.jpeg')"></div>
+            <div class="slide" style="background-image: url('https://i.imgur.com/MlVEReX.jpeg')"></div>
+            <div class="slide" style="background-image: url('https://i.imgur.com/iI4j9aI.jpeg')"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 text-center text-white relative z-10">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 animate-fade-in px-4">
+                أبو حذيفة للصرافة والتحويلات
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed px-4">
+                خدمات صرافة موثوقة وآمنة في اليمن • تحويلات سريعة وأسعار تنافسية • خدمة عملاء متميزة على مدار الساعة
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="downloadApp()" class="btn-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold flex items-center gap-3 hover:scale-105 transition-transform w-full sm:w-auto justify-center">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 18C17.5523 18 18 17.5523 18 17V11C18 10.4477 17.5523 10 17 10C16.4477 10 16 10.4477 16 11V15.5858L9.70711 9.29289C9.31658 8.90237 8.68342 8.90237 8.29289 9.29289C7.90237 9.68342 7.90237 10.3166 8.29289 10.7071L14.5858 17H10C9.44772 17 9 17.4477 9 18C9 18.5523 9.44772 19 10 19H17C17 19 17 19 17 18Z"/>
+                        <path d="M6 2C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V4C20 2.89543 19.1046 2 18 2H6Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    حمل تطبيق واصل كاش
+                </button>
+                <button onclick="contactUs()" class="bg-transparent border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all w-full sm:w-auto justify-center">
+                    تواصل معنا
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exchange Rates Section -->
+    <section id="rates" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">أسعار الصرف الحالية</h2>
+                <p class="text-gray-600 text-lg">أسعار محدثة لحظياً • شفافية كاملة في التعاملات</p>
+            </div>
+            
+            <div class="grid sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+                <!-- USD Card -->
+                <div class="currency-card p-8 text-white">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 mx-auto mb-3 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold">الدولار الأمريكي</h3>
+                        <p class="text-blue-100">مقابل الريال اليمني</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold mb-2">صنعاء (شمال)</h4>
+                            <div class="space-y-1">
+                                <div class="flex justify-between">
+                                    <span>شراء:</span>
+                                    <span class="font-bold" id="usd-sanaa-buy">534</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>بيع:</span>
+                                    <span class="font-bold" id="usd-sanaa-sell">536</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold mb-2">عدن (جنوب)</h4>
+                            <div class="space-y-1">
+                                <div class="flex justify-between">
+                                    <span>شراء:</span>
+                                    <span class="font-bold" id="usd-aden-buy">1620</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>بيع:</span>
+                                    <span class="font-bold" id="usd-aden-sell">1676</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SAR Card -->
+                <div class="currency-card p-8 text-white">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 mx-auto mb-3 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C13.1 2 14 2.9 14 4V6H16C17.1 6 18 6.9 18 8V10C18 11.1 17.1 12 16 12H14V14H16C17.1 14 18 14.9 18 16V18C18 19.1 17.1 20 16 20H14V22C14 23.1 13.1 24 12 24C10.9 24 10 23.1 10 22V20H8C6.9 20 6 19.1 6 18V16C6 14.9 6.9 14 8 14H10V12H8C6.9 12 6 11.1 6 10V8C6 6.9 6.9 6 8 6H10V4C10 2.9 10.9 2 12 2Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold">الريال السعودي</h3>
+                        <p class="text-blue-100">مقابل الريال اليمني</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold mb-2">صنعاء (شمال)</h4>
+                            <div class="space-y-1">
+                                <div class="flex justify-between">
+                                    <span>شراء:</span>
+                                    <span class="font-bold" id="sar-sanaa-buy">139</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>بيع:</span>
+                                    <span class="font-bold" id="sar-sanaa-sell">140</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold mb-2">عدن (جنوب)</h4>
+                            <div class="space-y-1">
+                                <div class="flex justify-between">
+                                    <span>شراء:</span>
+                                    <span class="font-bold" id="sar-aden-buy">425</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>بيع:</span>
+                                    <span class="font-bold" id="sar-aden-sell">440</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-gray-500">آخر تحديث: <span id="lastUpdate"></span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wasel Cash App Section -->
+    <section id="app" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <img src="https://i.imgur.com/q31oh1i.jpeg" alt="تطبيق واصل كاش" class="h-20 w-auto mx-auto mb-6 rounded-2xl shadow-lg" onerror="this.src=''; this.alt='تطبيق واصل كاش'; this.style.display='none';">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">تطبيق واصل كاش</h2>
+                <p class="text-gray-600 text-lg">حلول مالية ذكية في متناول يدك</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <!-- Features -->
+                <div class="space-y-8">
+                    <div class="flex items-start gap-4">
+                        <div class="feature-icon">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C13.1 2 14 2.9 14 4V6H16C17.1 6 18 6.9 18 8V10C18 11.1 17.1 12 16 12H14V14H16C17.1 14 18 14.9 18 16V18C18 19.1 17.1 20 16 20H14V22C14 23.1 13.1 24 12 24C10.9 24 10 23.1 10 22V20H8C6.9 20 6 19.1 6 18V16C6 14.9 6.9 14 8 14H10V12H8C6.9 12 6 11.1 6 10V8C6 6.9 6.9 6 8 6H10V4C10 2.9 10.9 2 12 2Z"/>
+                                <path d="M2 12L7 7V10H15V14H7V17L2 12Z" opacity="0.7"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">تحويل واستلام الحوالات</h3>
+                            <p class="text-gray-600">أرسل واستقبل الأموال في أي وقت ومن أي مكان بأمان وسرعة</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="feature-icon">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6.62 10.79C6.57 10.54 6.54 10.28 6.54 10C6.54 9.72 6.57 9.46 6.62 9.21L5.25 8.17C5.12 8.07 5.09 7.89 5.17 7.75L6.46 5.25C6.54 5.11 6.72 5.06 6.86 5.12L8.5 5.81C8.84 5.56 9.21 5.35 9.62 5.19L9.86 3.42C9.88 3.26 10.01 3.14 10.18 3.14H12.82C12.99 3.14 13.12 3.26 13.14 3.42L13.38 5.19C13.79 5.35 14.16 5.56 14.5 5.81L16.14 5.12C16.28 5.06 16.46 5.11 16.54 5.25L17.83 7.75C17.91 7.89 17.88 8.07 17.75 8.17L16.38 9.21C16.43 9.46 16.46 9.72 16.46 10C16.46 10.28 16.43 10.54 16.38 10.79L17.75 11.83C17.88 11.93 17.91 12.11 17.83 12.25L16.54 14.75C16.46 14.89 16.28 14.94 16.14 14.88L14.5 14.19C14.16 14.44 13.79 14.65 13.38 14.81L13.14 16.58C13.12 16.74 12.99 16.86 12.82 16.86H10.18C10.01 16.86 9.88 16.74 9.86 16.58L9.62 14.81C9.21 14.65 8.84 14.44 8.5 14.19L6.86 14.88C6.72 14.94 6.54 14.89 6.46 14.75L5.17 12.25C5.09 12.11 5.12 11.93 5.25 11.83L6.62 10.79ZM11.5 13C12.88 13 14 11.88 14 10.5S12.88 8 11.5 8 9 9.12 9 10.5 10.12 13 11.5 13Z"/>
+                                <path d="M2 17H22V19H2V17Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">شحن رصيد الهاتف</h3>
+                            <p class="text-gray-600">شحن فوري لجميع شركات الاتصالات اليمنية بأفضل الأسعار</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="feature-icon">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,11.5 16,12.1 16,12.7V16.2C16,16.8 15.4,17.3 14.8,17.3H9.2C8.6,17.3 8,16.8 8,16.2V12.7C8,12.1 8.6,11.5 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,10V11.5H13.5V10C13.5,8.7 12.8,8.2 12,8.2Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">أمان وموثوقية</h3>
+                            <p class="text-gray-600">تشفير عالي المستوى وحماية كاملة لبياناتك المالية</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                        <button onclick="downloadGooglePlay()" class="btn-primary text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-3 shadow-lg hover:shadow-xl text-sm">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.61 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                            </svg>
+                            Google Play
+                        </button>
+                        <button onclick="downloadAppStore()" class="btn-primary text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-3 shadow-lg hover:shadow-xl text-sm">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+                            </svg>
+                            App Store
+                        </button>
+                        <button onclick="downloadDirect()" class="btn-primary text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-3 shadow-lg hover:shadow-xl text-sm">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
+                            </svg>
+                            تحميل مباشر
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- iPhone 16 Mockup -->
+                <div class="text-center">
+                    <div class="iphone-mockup">
+                        <div class="iphone-screen">
+                            <div class="dynamic-island"></div>
+                            <div class="h-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 flex items-center justify-center relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                <div class="text-center text-white z-10 px-6">
+                                    <div class="w-20 h-20 mx-auto mb-6 bg-white bg-opacity-20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
+                                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2C13.1 2 14 2.9 14 4V6H16C17.1 6 18 6.9 18 8V10C18 11.1 17.1 12 16 12H14V14H16C17.1 14 18 14.9 18 16V18C18 19.1 17.1 20 16 20H14V22C14 23.1 13.1 24 12 24C10.9 24 10 23.1 10 22V20H8C6.9 20 6 19.1 6 18V16C6 14.9 6.9 14 8 14H10V12H8C6.9 12 6 11.1 6 10V8C6 6.9 6.9 6 8 6H10V4C10 2.9 10.9 2 12 2Z"/>
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-2xl font-bold mb-3">واصل كاش</h4>
+                                    <p class="text-sm opacity-90 mb-6 leading-relaxed">حلول مالية ذكية في متناول يدك</p>
+                                    <div class="relative">
+                                        <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm hover:bg-opacity-30 transition-all cursor-pointer">
+                                            <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M8 5v14l11-7z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="absolute inset-0 rounded-full border-2 border-white border-opacity-30 animate-ping"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">تواصل معنا</h2>
+                <p class="text-gray-600 text-lg">نحن هنا لخدمتك على مدار الساعة</p>
+            </div>
+            
+            <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
+                <div class="contact-card text-center p-8 rounded-2xl">
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">الموقع</h3>
+                    <p class="text-gray-600">اليمن، حضرموت، سيئون</p>
+                </div>
+                
+                <div class="contact-card text-center p-8 rounded-2xl">
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">خدمة العملاء</h3>
+                    <a href="https://wa.me/967733440054" class="text-green-600 hover:text-green-700 font-semibold transition-colors">
+                        967733440054+
+                    </a>
+                </div>
+                
+                <div class="contact-card text-center p-8 rounded-2xl">
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">البريد الإلكتروني</h3>
+                    <a href="mailto:abuhdyfh@gmail.com" class="text-blue-600 hover:text-blue-700 font-semibold transition-colors">
+                        abuhdyfh@gmail.com
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <div class="contact-card border border-green-200 rounded-2xl p-8 max-w-md mx-auto">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">الخدمة الذاتية للعملاء</h4>
+                    <p class="text-gray-600 mb-4 leading-relaxed">متابعة تقارير حساباتك وأرصدتك بشكل مباشر وآمن</p>
+                    <a href="https://wa.me/967772391570" class="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+                        </svg>
+                        واتساب: 967772391570+
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <img src="https://i.imgur.com/huAAjij.png" alt="أبو حذيفة للصرافة" class="h-16 w-auto mx-auto mb-4 rounded-2xl shadow-lg" onerror="this.src=''; this.alt='شعار أبو حذيفة للصرافة'; this.style.display='none';">
+                <h3 class="text-2xl font-bold mb-2">أبو حذيفة للصرافة والتحويلات</h3>
+                <p class="text-gray-400 mb-6">خدمات صرافة موثوقة وآمنة في اليمن</p>
+                <div class="flex justify-center space-x-6 space-x-reverse">
+                    <a href="https://wa.me/967733440054" class="text-green-400 hover:text-green-300 transition-colors">
+                        واتساب
+                    </a>
+                    <a href="mailto:abuhdyfh@gmail.com" class="text-blue-400 hover:text-blue-300 transition-colors">
+                        البريد الإلكتروني
+                    </a>
+                </div>
+                <div class="mt-8 pt-8 border-t border-gray-700">
+                    <p class="text-gray-400">&copy; 2024 أبو حذيفة للصرافة والتحويلات. جميع الحقوق محفوظة.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/967733440054" class="floating-whatsapp" title="تواصل معنا عبر واتساب">
+        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+        </svg>
+    </a>
+
+    <script>
+        // Google Sheets Configuration
+        const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/1rReJ7NERyGU2vq_0DQjTv0lldj7d0k4wTFjLONxZVKU/gviz/tq?tqx=out:json&sheet=';
+        
+        // Global variables for dynamic content
+        let heroImages = [];
+        let exchangeRates = {};
+        let appLinks = {};
+        let mockupMedia = '';
+        let currentSlide = 0;
+        
+        // Initialize the application
+        async function initializeApp() {
+            try {
+                await loadDataFromSheets();
+                setupSlideshow();
+                updateTimestamp();
+                
+                // Update content every 5 minutes
+                setInterval(async () => {
+                    await loadDataFromSheets();
+                    updateTimestamp();
+                }, 300000);
+                
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                // Use default values if Google Sheets fails
+                setupDefaultContent();
+            }
+        }
+        
+        // Load data from Google Sheets
+        async function loadDataFromSheets() {
+            try {
+                // Load Hero Images
+                const heroResponse = await fetch(GOOGLE_SHEETS_URL + 'HeroImages');
+                const heroData = await parseGoogleSheetsResponse(heroResponse);
+                if (heroData.length > 0) {
+                    heroImages = heroData.map(row => row[0]).filter(url => url);
+                    updateHeroImages();
+                }
+                
+                // Load Exchange Rates
+                const ratesResponse = await fetch(GOOGLE_SHEETS_URL + 'ExchangeRates');
+                const ratesData = await parseGoogleSheetsResponse(ratesResponse);
+                if (ratesData.length > 0) {
+                    exchangeRates = parseExchangeRates(ratesData);
+                    updateExchangeRates();
+                }
+                
+                // Load App Links
+                const linksResponse = await fetch(GOOGLE_SHEETS_URL + 'AppLinks');
+                const linksData = await parseGoogleSheetsResponse(linksResponse);
+                if (linksData.length > 0) {
+                    appLinks = parseAppLinks(linksData);
+                }
+                
+                // Load Mockup Media
+                const mockupResponse = await fetch(GOOGLE_SHEETS_URL + 'MockupMedia');
+                const mockupData = await parseGoogleSheetsResponse(mockupResponse);
+                if (mockupData.length > 0 && mockupData[0][0]) {
+                    mockupMedia = mockupData[0][0];
+                    updateMockupMedia();
+                }
+                
+                console.log('تم تحميل البيانات من Google Sheets بنجاح');
+                
+            } catch (error) {
+                console.error('خطأ في الاتصال بـ Google Sheets:', error);
+                throw error;
+            }
+        }
+        
+        // Parse Google Sheets JSON response
+        async function parseGoogleSheetsResponse(response) {
+            const text = await response.text();
+            const jsonText = text.substring(47).slice(0, -2);
+            const data = JSON.parse(jsonText);
+            
+            if (data.table && data.table.rows) {
+                return data.table.rows.map(row => 
+                    row.c ? row.c.map(cell => cell ? cell.v : '') : []
+                );
+            }
+            return [];
+        }
+        
+        // Parse exchange rates data
+        function parseExchangeRates(data) {
+            const rates = {};
+            data.forEach(row => {
+                if (row.length >= 4) {
+                    const currency = row[0];
+                    const region = row[1];
+                    const buy = row[2];
+                    const sell = row[3];
+                    
+                    if (!rates[currency]) rates[currency] = {};
+                    rates[currency][region] = { buy, sell };
+                }
+            });
+            return rates;
+        }
+        
+        // Parse app links data
+        function parseAppLinks(data) {
+            const links = {};
+            data.forEach(row => {
+                if (row.length >= 2) {
+                    links[row[0]] = row[1];
+                }
+            });
+            return links;
+        }
+        
+        // Update hero images
+        function updateHeroImages() {
+            const slides = document.querySelectorAll('.slide');
+            heroImages.forEach((imageUrl, index) => {
+                if (slides[index]) {
+                    slides[index].style.backgroundImage = `url('${imageUrl}')`;
+                }
+            });
+        }
+        
+        // Update exchange rates display
+        function updateExchangeRates() {
+            // Update USD rates
+            if (exchangeRates.USD) {
+                if (exchangeRates.USD['صنعاء']) {
+                    updateRateDisplay('usd-sanaa-buy', exchangeRates.USD['صنعاء'].buy);
+                    updateRateDisplay('usd-sanaa-sell', exchangeRates.USD['صنعاء'].sell);
+                }
+                if (exchangeRates.USD['عدن']) {
+                    updateRateDisplay('usd-aden-buy', exchangeRates.USD['عدن'].buy);
+                    updateRateDisplay('usd-aden-sell', exchangeRates.USD['عدن'].sell);
+                }
+            }
+            
+            // Update SAR rates
+            if (exchangeRates.SAR) {
+                if (exchangeRates.SAR['صنعاء']) {
+                    updateRateDisplay('sar-sanaa-buy', exchangeRates.SAR['صنعاء'].buy);
+                    updateRateDisplay('sar-sanaa-sell', exchangeRates.SAR['صنعاء'].sell);
+                }
+                if (exchangeRates.SAR['عدن']) {
+                    updateRateDisplay('sar-aden-buy', exchangeRates.SAR['عدن'].buy);
+                    updateRateDisplay('sar-aden-sell', exchangeRates.SAR['عدن'].sell);
+                }
+            }
+        }
+        
+        // Helper function to update rate display
+        function updateRateDisplay(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element && value) {
+                element.textContent = value;
+            }
+        }
+        
+        // Update mockup media (image or video)
+        function updateMockupMedia() {
+            const mockupContainer = document.querySelector('.iphone-screen');
+            if (!mockupContainer || !mockupMedia) return;
+            
+            const isVideo = mockupMedia.includes('.mp4') || mockupMedia.includes('.webm') || mockupMedia.includes('youtube') || mockupMedia.includes('vimeo');
+            
+            if (isVideo) {
+                // Create video element
+                const videoElement = document.createElement('div');
+                videoElement.className = 'h-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 flex items-center justify-center relative';
+                videoElement.innerHTML = `
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <video class="w-full h-full object-cover rounded-[40px]" autoplay muted loop playsinline>
+                        <source src="${mockupMedia}" type="video/mp4">
+                        <div class="text-center text-white z-10 px-6">
+                            <div class="w-20 h-20 mx-auto mb-6 bg-white bg-opacity-20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
+                                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C13.1 2 14 2.9 14 4V6H16C17.1 6 18 6.9 18 8V10C18 11.1 17.1 12 16 12H14V14H16C17.1 14 18 14.9 18 16V18C18 19.1 17.1 20 16 20H14V22C14 23.1 13.1 24 12 24C10.9 24 10 23.1 10 22V20H8C6.9 20 6 19.1 6 18V16C6 14.9 6.9 14 8 14H10V12H8C6.9 12 6 11.1 6 10V8C6 6.9 6.9 6 8 6H10V4C10 2.9 10.9 2 12 2Z"/>
+                                </svg>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3">واصل كاش</h4>
+                            <p class="text-sm opacity-90 mb-6 leading-relaxed">حلول مالية ذكية في متناول يدك</p>
+                        </div>
+                    </video>
+                `;
+                
+                // Replace existing content
+                mockupContainer.innerHTML = '';
+                mockupContainer.appendChild(document.querySelector('.dynamic-island').cloneNode(true));
+                mockupContainer.appendChild(videoElement);
+            } else {
+                // Update background image for static image
+                const contentDiv = mockupContainer.querySelector('.h-full');
+                if (contentDiv) {
+                    contentDiv.style.backgroundImage = `url('${mockupMedia}')`;
+                    contentDiv.style.backgroundSize = 'cover';
+                    contentDiv.style.backgroundPosition = 'center';
+                }
+            }
+        }
+        
+        // Setup default content if Google Sheets fails
+        function setupDefaultContent() {
+            heroImages = [
+                'https://i.imgur.com/tZhzGCN.jpeg',
+                'https://i.imgur.com/MlVEReX.jpeg',
+                'https://i.imgur.com/iI4j9aI.jpeg'
+            ];
+            
+            exchangeRates = {
+                USD: {
+                    'صنعاء': { buy: '534', sell: '536' },
+                    'عدن': { buy: '1620', sell: '1676' }
+                },
+                SAR: {
+                    'صنعاء': { buy: '139', sell: '140' },
+                    'عدن': { buy: '425', sell: '440' }
+                }
+            };
+            
+            appLinks = {
+                'GooglePlay': '#',
+                'AppStore': '#',
+                'DirectDownload': '#'
+            };
+            
+            setupSlideshow();
+            updateExchangeRates();
+        }
+        
+        // Slideshow functionality
+        function setupSlideshow() {
+            const slides = document.querySelectorAll('.slide');
+            
+            function nextSlide() {
+                if (slides.length === 0) return;
+                
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+            
+            // Auto-advance slides every 5 seconds
+            setInterval(nextSlide, 5000);
+        }
+        
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const timeString = now.toLocaleString('ar-YE', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            const timestampElement = document.getElementById('lastUpdate');
+            if (timestampElement) {
+                timestampElement.textContent = timeString;
+            }
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // App download functions
+        function downloadApp() {
+            if (appLinks.DirectDownload && appLinks.DirectDownload !== '#') {
+                window.open(appLinks.DirectDownload, '_blank');
+            } else {
+                alert('سيتم توجيهك لتحميل تطبيق واصل كاش قريباً!');
+            }
+        }
+        
+        function downloadGooglePlay() {
+            if (appLinks.GooglePlay && appLinks.GooglePlay !== '#') {
+                window.open(appLinks.GooglePlay, '_blank');
+            } else {
+                alert('سيتم توجيهك إلى متجر Google Play لتحميل تطبيق واصل كاش قريباً!');
+            }
+        }
+        
+        function downloadAppStore() {
+            if (appLinks.AppStore && appLinks.AppStore !== '#') {
+                window.open(appLinks.AppStore, '_blank');
+            } else {
+                alert('سيتم توجيهك إلى App Store لتحميل تطبيق واصل كاش قريباً!');
+            }
+        }
+        
+        function downloadDirect() {
+            if (appLinks.DirectDownload && appLinks.DirectDownload !== '#') {
+                window.open(appLinks.DirectDownload, '_blank');
+            } else {
+                alert('سيتم بدء التحميل المباشر لتطبيق واصل كاش قريباً!');
+            }
+        }
+        
+        function contactUs() {
+            window.open('https://wa.me/967733440054', '_blank');
+        }
+        
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(17, 55, 102, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(17, 55, 102, 0.95)';
+            }
+        });
+        
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97376c9874b13410',t:'MTc1NTkxODcwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
