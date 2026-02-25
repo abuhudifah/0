@@ -212,7 +212,13 @@
         .toast-error {
             background: linear-gradient(135deg, #ef4444, #dc2626);
         }
+        /* تعطيل روابط التواصل عندما تكون # */
         .social-link[href="#"] {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        /* تعطيل روابط التحميل عندما تكون # */
+        .download-link[href="#"] {
             opacity: 0.5;
             pointer-events: none;
         }
@@ -390,6 +396,13 @@
  </head>
  <body class="bg-gray-50">
   <div class="app-wrapper" id="app">
+      <!-- Loading Screen -->
+<div id="loading-screen" class="fixed inset-0 bg-primary z-[100] flex items-center justify-center transition-opacity duration-500">
+    <div class="text-center">
+        <div class="w-20 h-20 border-4 border-teal border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-white text-xl font-bold">جاري تحميل الموقع...</p>
+    </div>
+</div>
    <!-- Toast Notification -->
    <div id="toast" class="toast"></div>
    <!-- Navigation -->
@@ -447,14 +460,14 @@
         <h1 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">أرسل واستلم أموالك<br><span class="text-teal">بسهولة وأمان</span></h1>
         <p id="hero-subtitle" class="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">تطبيق واصل كاش يوفر لك أسرع وأسهل طريقة لتحويل الأموال، سداد الفواتير، وشراء العملات الرقمية في اليمن</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-         <a id="android-link" href="#" target="_blank" rel="noopener noreferrer" class="bg-black text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl flex items-center gap-3 hover:bg-gray-800 transition-all card-hover justify-center">
+         <a id="android-link" href="#" target="_blank" rel="noopener noreferrer" class="download-link bg-black text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl flex items-center gap-3 hover:bg-gray-800 transition-all card-hover justify-center">
           <i class="fab fa-google-play text-xl sm:text-2xl text-teal"></i>
           <div class="text-right">
            <div class="text-xs opacity-75">متوفر على</div>
            <div class="font-bold text-sm sm:text-base">Google Play</div>
           </div>
          </a>
-         <a id="ios-link" href="#" target="_blank" rel="noopener noreferrer" class="bg-black text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl flex items-center gap-3 hover:bg-gray-800 transition-all card-hover justify-center">
+         <a id="ios-link" href="#" target="_blank" rel="noopener noreferrer" class="download-link bg-black text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl flex items-center gap-3 hover:bg-gray-800 transition-all card-hover justify-center">
           <i class="fab fa-apple text-xl sm:text-2xl"></i>
           <div class="text-right">
            <div class="text-xs opacity-75">حمّل من</div>
@@ -504,7 +517,7 @@
     <!-- Statistics Section -->
     <section id="statistics" class="py-16 sm:py-20 md:py-24 gradient-bg relative overflow-hidden">
      <div class="absolute inset-0 opacity-10">
-      <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30v0h-2v4h-4v2h4v4h2v6h4v4h-4zm6 34v-4h4v4h0v2h4v4h2v-4h4v-2h6zm6 4v0h4v4h0v2h4v4h2v6h4v4h6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+      <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3G fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30v0h-2v4h-4v2h4v4h2v6h4v4h-4zm6 34v-4h4v4h0v2h4v4h2v-4h4v-2h6zm6 4v0h4v4h0v2h4v4h2v6h4v4h6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
      </div>
      <div class="container-custom px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-10 sm:mb-16">
@@ -583,14 +596,14 @@
        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">حمّل التطبيق الآن</h2>
        <p class="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto">انضم لآلاف المستخدمين واستمتع بتجربة مالية سهلة وآمنة</p>
        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-        <a id="android-link-2" href="#" target="_blank" rel="noopener noreferrer" class="bg-black text-white px-6 sm:px-10 py-4 sm:py-5 rounded-xl sm:rounded-2xl flex items-center gap-3 sm:gap-4 hover:bg-gray-800 transition-all card-hover pulse-glow justify-center">
+        <a id="android-link-2" href="#" target="_blank" rel="noopener noreferrer" class="download-link bg-black text-white px-6 sm:px-10 py-4 sm:py-5 rounded-xl sm:rounded-2xl flex items-center gap-3 sm:gap-4 hover:bg-gray-800 transition-all card-hover pulse-glow justify-center">
          <i class="fab fa-google-play text-2xl sm:text-4xl text-teal"></i>
          <div class="text-right">
           <div class="text-xs sm:text-sm opacity-75">متوفر على</div>
           <div class="text-base sm:text-xl font-bold">Google Play</div>
          </div>
         </a>
-        <a id="ios-link-2" href="#" target="_blank" rel="noopener noreferrer" class="bg-black text-white px-6 sm:px-10 py-4 sm:py-5 rounded-xl sm:rounded-2xl flex items-center gap-3 sm:gap-4 hover:bg-gray-800 transition-all card-hover pulse-glow justify-center">
+        <a id="ios-link-2" href="#" target="_blank" rel="noopener noreferrer" class="download-link bg-black text-white px-6 sm:px-10 py-4 sm:py-5 rounded-xl sm:rounded-2xl flex items-center gap-3 sm:gap-4 hover:bg-gray-800 transition-all card-hover pulse-glow justify-center">
          <i class="fab fa-apple text-2xl sm:text-4xl"></i>
          <div class="text-right">
           <div class="text-xs sm:text-sm opacity-75">حمّل من</div>
@@ -641,7 +654,7 @@
        </div>
       </div>
       <div class="border-t border-gray-700 pt-6 sm:pt-8 text-center">
-       <p class="text-gray-400 text-sm sm:text-base">© 2024 Malek Art. جميع الحقوق محفوظة.</p>
+       <p class="text-gray-400 text-sm sm:text-base">© 2025 Malek Art. جميع الحقوق محفوظة.</p>
       </div>
      </div>
     </footer>
@@ -1240,7 +1253,8 @@
         // عداد الزوار
         database.ref('visitors').on('value', snapshot => {
             appState.visitors = snapshot.val() || 0;
-            document.getElementById('admin-visitors-count').textContent = appState.visitors;
+            const visitorsEl = document.getElementById('admin-visitors-count');
+            if (visitorsEl) visitorsEl.textContent = appState.visitors;
         });
     }
 
@@ -1539,30 +1553,56 @@
         }).join('');
     }
 
-    function updatePublicDownloads() {
-        const androidLink1 = document.getElementById('android-link');
-        const androidLink2 = document.getElementById('android-link-2');
-        const iosLink1 = document.getElementById('ios-link');
-        const iosLink2 = document.getElementById('ios-link-2');
+   function updatePublicDownloads() {
+    const androidLink1 = document.getElementById('android-link');
+    const androidLink2 = document.getElementById('android-link-2');
+    const iosLink1 = document.getElementById('ios-link');
+    const iosLink2 = document.getElementById('ios-link-2');
 
-        const setLink = (element, url) => {
-            if (!element) return;
-            if (url && url.trim() !== '') {
-                element.href = url;
-                element.classList.remove('opacity-50', 'pointer-events-none');
-            } else {
-                // إذا لم يكن هناك رابط، نضيف رابط وهمي ونجعله غير قابل للنقر مع شفافية
-                element.href = '#';
-                element.classList.add('opacity-50', 'pointer-events-none');
-            }
+    const setLink = (element, url) => {
+        if (!element) return;
+        
+        // إزالة أي onclick سابق
+        element.onclick = null;
+        
+        // تنظيف الرابط من أي مسافات
+        let cleanUrl = url ? url.trim() : '';
+        
+        // إذا كان الرابط فارغاً، نعطله
+        if (!cleanUrl) {
+            element.classList.add('opacity-50', 'pointer-events-none');
+            element.onclick = (e) => {
+                e.preventDefault();
+                return false;
+            };
+            element.href = 'javascript:void(0)'; // لمنع أي إجراء
+            console.log(`العنصر ${element.id} معطل (لا يوجد رابط)`);
+            return;
+        }
+        
+        // التأكد من أن الرابط يبدأ بـ http
+        if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+            cleanUrl = 'https://' + cleanUrl;
+        }
+        
+        // إزالة كلاسات التعطيل
+        element.classList.remove('opacity-50', 'pointer-events-none');
+        
+        // تعيين onclick بدلاً من href لتجنب أي تداخل
+        element.href = 'javascript:void(0)'; // إلغاء href الافتراضي
+        element.onclick = (e) => {
+            e.preventDefault();
+            window.open(cleanUrl, '_blank');
         };
+        
+        console.log(`تم تعيين الرابط للعنصر ${element.id} إلى: ${cleanUrl}`);
+    };
 
-        setLink(androidLink1, appState.settings.androidLink);
-        setLink(androidLink2, appState.settings.androidLink);
-        setLink(iosLink1, appState.settings.iosLink);
-        setLink(iosLink2, appState.settings.iosLink);
-    }
-
+    setLink(androidLink1, appState.settings.androidLink);
+    setLink(androidLink2, appState.settings.androidLink);
+    setLink(iosLink1, appState.settings.iosLink);
+    setLink(iosLink2, appState.settings.iosLink);
+}
     function updatePublicSocial() {
         const container = document.getElementById('social-links');
         if (!container) return;
@@ -2078,11 +2118,21 @@
     }
 
     function updateDashboardCounts() {
-        document.getElementById('admin-services-count').textContent = appState.services.length;
-        document.getElementById('admin-testimonials-count').textContent = appState.testimonials.length;
-        document.getElementById('admin-news-count').textContent = appState.news.length;
-        document.getElementById('admin-videos-count').textContent = appState.videos.length;
-        document.getElementById('admin-admins-count').textContent = appState.admins.length;
+        // التحقق من وجود العناصر قبل تحديثها
+        const servicesEl = document.getElementById('admin-services-count');
+        if (servicesEl) servicesEl.textContent = appState.services.length;
+        
+        const testimonialsEl = document.getElementById('admin-testimonials-count');
+        if (testimonialsEl) testimonialsEl.textContent = appState.testimonials.length;
+        
+        const newsEl = document.getElementById('admin-news-count');
+        if (newsEl) newsEl.textContent = appState.news.length;
+        
+        const videosEl = document.getElementById('admin-videos-count');
+        if (videosEl) videosEl.textContent = appState.videos.length;
+        
+        const adminsEl = document.getElementById('admin-admins-count');
+        if (adminsEl) adminsEl.textContent = appState.admins.length;
     }
 
     // ==================== حذف التأكيد ====================
@@ -2127,19 +2177,122 @@
     });
 
     // ==================== بدء التطبيق ====================
-    function init() {
-        setupFirebaseListeners();
-        incrementVisitorCount(); // زيادة عداد الزوار عند تحميل الصفحة
-        // Close admin sidebar on window resize if open and screen becomes large
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 1024) {
-                document.getElementById('admin-sidebar').classList.remove('open');
-                document.getElementById('admin-overlay').classList.remove('open');
-            }
-        });
-    }
+    // ==================== دالة التحميل الأولي ====================
+async function loadInitialData() {
+    console.log('بدء تحميل البيانات من Firebase...');
+    
+    try {
+        const [
+            settingsSnap,
+            statsSnap,
+            servicesSnap,
+            testimonialsSnap,
+            newsSnap,
+            videosSnap,
+            downloadsSnap,
+            socialSnap,
+            adminsSnap,
+            visitorsSnap
+        ] = await Promise.all([
+            database.ref('settings').once('value'),
+            database.ref('stats').once('value'),
+            database.ref('services').once('value'),
+            database.ref('testimonials').once('value'),
+            database.ref('news').once('value'),
+            database.ref('videos').once('value'),
+            database.ref('downloads').once('value'),
+            database.ref('social').once('value'),
+            database.ref('admins').once('value'),
+            database.ref('visitors').once('value')
+        ]);
 
-    init();
+        // تعبئة الحالة بالبيانات المستلمة
+        if (settingsSnap.exists()) Object.assign(appState.settings, settingsSnap.val());
+        if (statsSnap.exists()) Object.assign(appState.stats, statsSnap.val());
+        
+        if (servicesSnap.exists()) appState.services = Object.values(servicesSnap.val());
+        else appState.services = [];
+        
+        if (testimonialsSnap.exists()) appState.testimonials = Object.values(testimonialsSnap.val());
+        else appState.testimonials = [];
+        
+        if (newsSnap.exists()) {
+            appState.news = Object.values(newsSnap.val());
+            appState.news.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+        } else appState.news = [];
+        
+        if (videosSnap.exists()) {
+            appState.videos = Object.values(videosSnap.val());
+            appState.videos.sort((a, b) => (a.order || 999) - (b.order || 999));
+        } else appState.videos = [];
+        
+        if (downloadsSnap.exists()) {
+            appState.settings.androidLink = downloadsSnap.val().android || '';
+            appState.settings.iosLink = downloadsSnap.val().ios || '';
+        }
+        
+        if (socialSnap.exists()) Object.assign(appState.settings.social, socialSnap.val());
+        
+        if (adminsSnap.exists()) appState.admins = Object.values(adminsSnap.val());
+        else appState.admins = [];
+        
+        appState.visitors = visitorsSnap.val() || 0;
+
+        // تحديث الواجهة العامة
+        updatePublicContent();
+        updatePublicStats();
+        updatePublicServices();
+        updatePublicTestimonials();
+        updatePublicNews();
+        updatePublicVideos();
+        updatePublicDownloads();
+        updatePublicSocial();
+
+        console.log('تم تحميل جميع البيانات بنجاح');
+        
+        // إخفاء شاشة التحميل
+        document.getElementById('loading-screen').classList.add('opacity-0');
+        setTimeout(() => {
+            document.getElementById('loading-screen').classList.add('hidden');
+        }, 500);
+        
+    } catch (error) {
+        console.error('خطأ في تحميل البيانات:', error);
+        showToast('حدث خطأ في تحميل البيانات', 'error');
+        document.getElementById('loading-screen').classList.add('opacity-0');
+        setTimeout(() => {
+            document.getElementById('loading-screen').classList.add('hidden');
+        }, 500);
+    }
+}
+
+// ==================== بدء التطبيق ====================
+async function init() {
+    // إظهار شاشة التحميل
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.classList.remove('hidden', 'opacity-0');
+    }
+    
+    // تحميل البيانات الأولية
+    await loadInitialData();
+    
+    // بعد تحميل البيانات، نضيف المستمعات للتحديثات المستقبلية
+    setupFirebaseListeners();
+    
+    incrementVisitorCount(); // زيادة عداد الزوار
+    
+    // إغلاق القائمة الجانبية عند تغيير حجم الشاشة
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) {
+            document.getElementById('admin-sidebar')?.classList.remove('open');
+            document.getElementById('admin-overlay')?.classList.remove('open');
+        }
+    });
+}
+
+// تنفيذ init
+init();
   </script>
  </body>
-  </html> 
+</html>
